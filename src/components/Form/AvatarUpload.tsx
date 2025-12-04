@@ -69,7 +69,9 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
           </div>
         ) : (
           <div className="space-y-2">
-            <div className="text-5xl">🐝</div>
+            <div className="flex justify-center">
+              <img src="/images/avatar_bee.webp" alt="Bee" className="w-16 h-16" />
+            </div>
             <p className="text-gray-600">
               {isDragActive
                 ? 'Drop your image here'
