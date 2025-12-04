@@ -101,9 +101,9 @@ function App() {
           <div className="space-y-6 lg:sticky lg:top-8 lg:self-start">
             <section className="bg-white rounded-xl p-6 shadow-lg">
               <h2 className="text-2xl font-bold mb-4 text-honey-700">Preview</h2>
-              <div className="flex justify-center">
-                <div className="transform scale-75 origin-top">
-                  <CardPreview cardData={cardData} id="card-preview" />
+              <div className="w-full overflow-hidden">
+                <div className="w-full" style={{ aspectRatio: '1200/630' }}>
+                  <CardPreview cardData={cardData} id="card-preview" scale={0.5} />
                 </div>
               </div>
             </section>

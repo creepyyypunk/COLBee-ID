@@ -16,15 +16,14 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
   const glowCSS = calculateGlowLayers(role, achievements);
 
   const width = CARD_LAYOUT.display.width * scale;
-  const height = CARD_LAYOUT.display.height * scale;
 
   return (
     <div
       id={id}
-      className="relative rounded-xl overflow-hidden"
+      className="relative rounded-xl overflow-hidden w-full"
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
+        maxWidth: `${width}px`,
+        aspectRatio: '1200/630',
         boxShadow: glowCSS
       }}
     >
@@ -55,25 +54,29 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
         </div>
 
         <h1
-          className="absolute font-bold"
+          className="absolute font-bold overflow-hidden whitespace-nowrap"
           style={{
             left: `${CARD_LAYOUT.username.x}px`,
             top: `${CARD_LAYOUT.username.y}px`,
             fontSize: `${CARD_LAYOUT.username.fontSize}px`,
             fontWeight: CARD_LAYOUT.username.fontWeight,
-            color: CARD_LAYOUT.username.color
+            color: CARD_LAYOUT.username.color,
+            maxWidth: '800px',
+            textOverflow: 'ellipsis'
           }}
         >
           {cardData.username || 'Your Name'}
         </h1>
 
         <p
-          className="absolute"
+          className="absolute overflow-hidden whitespace-nowrap"
           style={{
             left: `${CARD_LAYOUT.role.x}px`,
             top: `${CARD_LAYOUT.role.y}px`,
             fontSize: `${CARD_LAYOUT.role.fontSize}px`,
-            color: CARD_LAYOUT.role.color
+            color: CARD_LAYOUT.role.color,
+            maxWidth: '800px',
+            textOverflow: 'ellipsis'
           }}
         >
           {role.displayName}
@@ -81,11 +84,13 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
 
         {cardData.twitter && (
           <p
-            className="absolute text-gray-700"
+            className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
             style={{
               left: `${CARD_LAYOUT.social.twitter.x}px`,
               top: `${CARD_LAYOUT.social.twitter.y}px`,
-              fontSize: `${CARD_LAYOUT.social.twitter.fontSize}px`
+              fontSize: `${CARD_LAYOUT.social.twitter.fontSize}px`,
+              maxWidth: '800px',
+              textOverflow: 'ellipsis'
             }}
           >
             🐦 {cardData.twitter.startsWith('@') ? cardData.twitter : `@${cardData.twitter}`}
@@ -94,11 +99,13 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
 
         {cardData.discord && (
           <p
-            className="absolute text-gray-700"
+            className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
             style={{
               left: `${CARD_LAYOUT.social.discord.x}px`,
               top: `${CARD_LAYOUT.social.discord.y}px`,
-              fontSize: `${CARD_LAYOUT.social.discord.fontSize}px`
+              fontSize: `${CARD_LAYOUT.social.discord.fontSize}px`,
+              maxWidth: '800px',
+              textOverflow: 'ellipsis'
             }}
           >
             💬 {cardData.discord}
