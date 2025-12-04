@@ -125,7 +125,6 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               key={achievement.id}
               src={achievement.icon}
               alt={achievement.name}
-              className="rounded-lg shadow-md"
               style={{
                 width: `${CARD_LAYOUT.achievements.iconSize}px`,
                 height: `${CARD_LAYOUT.achievements.iconSize}px`

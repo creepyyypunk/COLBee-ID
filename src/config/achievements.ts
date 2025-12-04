@@ -5,7 +5,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 'colmeia-collective',
     name: 'Colmeia Collective',
-    icon: generatePlaceholderIcon('colmeia-collective'),
+    icon: '/images/avatar_bee.webp',
     glowColor: '#FF6B9D',
     glowIntensity: 0.5
   },
