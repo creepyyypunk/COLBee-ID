@@ -91,33 +91,55 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           </p>
 
           {cardData.twitter && (
-            <p
-              className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
+            <div
+              className="absolute flex items-center gap-2 overflow-hidden whitespace-nowrap"
               style={{
                 left: `${CARD_LAYOUT.social.twitter.x}px`,
                 top: `${CARD_LAYOUT.social.twitter.y}px`,
                 fontSize: `${CARD_LAYOUT.social.twitter.fontSize}px`,
-                maxWidth: '800px',
-                textOverflow: 'ellipsis'
+                maxWidth: '800px'
               }}
             >
-              🐦 {cardData.twitter.startsWith('@') ? cardData.twitter : `@${cardData.twitter}`}
-            </p>
+              <img
+                src="/images/icons/twitter.png"
+                alt="Twitter"
+                style={{
+                  width: `${CARD_LAYOUT.social.twitter.fontSize}px`,
+                  height: `${CARD_LAYOUT.social.twitter.fontSize}px`,
+                  objectFit: 'contain'
+                }}
+                crossOrigin="anonymous"
+              />
+              <span className="text-gray-700" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {cardData.twitter.startsWith('@') ? cardData.twitter : `@${cardData.twitter}`}
+              </span>
+            </div>
           )}
 
           {cardData.discord && (
-            <p
-              className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
+            <div
+              className="absolute flex items-center gap-2 overflow-hidden whitespace-nowrap"
               style={{
                 left: `${CARD_LAYOUT.social.discord.x}px`,
                 top: `${CARD_LAYOUT.social.discord.y}px`,
                 fontSize: `${CARD_LAYOUT.social.discord.fontSize}px`,
-                maxWidth: '800px',
-                textOverflow: 'ellipsis'
+                maxWidth: '800px'
               }}
             >
-              💬 {cardData.discord}
-            </p>
+              <img
+                src="/images/icons/discord.png"
+                alt="Discord"
+                style={{
+                  width: `${CARD_LAYOUT.social.discord.fontSize}px`,
+                  height: `${CARD_LAYOUT.social.discord.fontSize}px`,
+                  objectFit: 'contain'
+                }}
+                crossOrigin="anonymous"
+              />
+              <span className="text-gray-700" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {cardData.discord}
+              </span>
+            </div>
           )}
 
           <div
