@@ -74,7 +74,7 @@ function App() {
             </section>
 
             <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Avatar</h2>
+              <h2 className="text-2xl font-bold mb-4 text-honey-700">PFP</h2>
               <AvatarUpload
                 currentAvatar={cardData.avatar}
                 onChange={updateAvatar}

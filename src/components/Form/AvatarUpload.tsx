@@ -39,7 +39,7 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
   return (
     <div className="space-y-4">
       <label className="block text-sm font-medium text-gray-700">
-        Avatar
+        Add your PFP here
       </label>
 
       <div
