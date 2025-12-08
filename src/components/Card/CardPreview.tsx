@@ -10,21 +10,74 @@ interface CardPreviewProps {
   scale?: number;
 }
 
+interface SocialIconProps {
+  platform: 'twitter' | 'discord';
+  handle: string;
+}
+
+const SOCIAL_TEXT_MAX_WIDTH = '770px';
+const PRIMARY_TEXT_MAX_WIDTH = '800px';
+const ICON_TEXT_SPACING = 8;
+
+function SocialIcon({ platform, handle }: SocialIconProps) {
+  const config = CARD_LAYOUT.social[platform];
+  const displayHandle = platform === 'twitter' && !handle.startsWith('@') ? `@${handle}` : handle;
+
+  return (
+    <>
+      <img
+        src={`/images/icons/${platform}.png`}
+        alt={platform === 'twitter' ? 'Twitter' : 'Discord'}
+        className="absolute"
+        style={{
+          left: `${config.x}px`,
+          top: `${config.y}px`,
+          width: `${config.fontSize}px`,
+          height: `${config.fontSize}px`,
+          objectFit: 'contain'
+        }}
+        crossOrigin="anonymous"
+      />
+      <span
+        className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
+        style={{
+          left: `${config.x + config.fontSize + ICON_TEXT_SPACING}px`,
+          top: `${config.y}px`,
+          fontSize: `${config.fontSize}px`,
+          lineHeight: `${config.fontSize}px`,
+          maxWidth: SOCIAL_TEXT_MAX_WIDTH,
+          textOverflow: 'ellipsis'
+        }}
+      >
+        {displayHandle}
+      </span>
+    </>
+  );
+}
+
 export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }: CardPreviewProps) {
   const role = ROLES.find(r => r.id === cardData.role) || ROLES[0];
   const achievements = ACHIEVEMENTS.filter(a => cardData.achievements.includes(a.id));
   const glowCSS = calculateGlowLayers(role, achievements);
 
-  const width = CARD_LAYOUT.display.width * scale;
+  const isExport = scale === 1;
+  const containerStyles = isExport
+    ? {
+        width: `${CARD_LAYOUT.display.width}px`,
+        height: `${CARD_LAYOUT.display.height}px`,
+      }
+    : {
+        maxWidth: `${CARD_LAYOUT.display.width * scale}px`,
+        aspectRatio: '1200/630',
+        overflow: 'hidden',
+      };
 
   return (
     <div
       className="relative w-full"
       style={{
-        maxWidth: `${width}px`,
-        aspectRatio: '1200/630',
-        borderRadius: '12px',
-        overflow: 'hidden'
+        ...containerStyles,
+        borderRadius: '12px'
       }}
     >
       <div
@@ -42,7 +95,10 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           crossOrigin="anonymous"
         />
 
-        <div className="relative z-10" style={{ transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+        <div
+          className="relative z-10"
+          style={!isExport ? { transform: `scale(${scale})`, transformOrigin: 'top left' } : undefined}
+        >
           <div
             className="absolute rounded-full overflow-hidden bg-white border-4 border-white shadow-lg"
             style={{
@@ -69,7 +125,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               fontSize: `${CARD_LAYOUT.username.fontSize}px`,
               fontWeight: CARD_LAYOUT.username.fontWeight,
               color: CARD_LAYOUT.username.color,
-              maxWidth: '800px',
+              maxWidth: PRIMARY_TEXT_MAX_WIDTH,
               textOverflow: 'ellipsis'
             }}
           >
@@ -83,64 +139,16 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               top: `${CARD_LAYOUT.role.y}px`,
               fontSize: `${CARD_LAYOUT.role.fontSize}px`,
               color: CARD_LAYOUT.role.color,
-              maxWidth: '800px',
+              maxWidth: PRIMARY_TEXT_MAX_WIDTH,
               textOverflow: 'ellipsis'
             }}
           >
             {role.displayName}
           </p>
 
-          {cardData.twitter && (
-            <div
-              className="absolute flex items-center gap-2 overflow-hidden whitespace-nowrap"
-              style={{
-                left: `${CARD_LAYOUT.social.twitter.x}px`,
-                top: `${CARD_LAYOUT.social.twitter.y}px`,
-                fontSize: `${CARD_LAYOUT.social.twitter.fontSize}px`,
-                maxWidth: '800px'
-              }}
-            >
-              <img
-                src="/images/icons/twitter.png"
-                alt="Twitter"
-                style={{
-                  width: `${CARD_LAYOUT.social.twitter.fontSize}px`,
-                  height: `${CARD_LAYOUT.social.twitter.fontSize}px`,
-                  objectFit: 'contain'
-                }}
-                crossOrigin="anonymous"
-              />
-              <span className="text-gray-700" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {cardData.twitter.startsWith('@') ? cardData.twitter : `@${cardData.twitter}`}
-              </span>
-            </div>
-          )}
+          {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} />}
 
-          {cardData.discord && (
-            <div
-              className="absolute flex items-center gap-2 overflow-hidden whitespace-nowrap"
-              style={{
-                left: `${CARD_LAYOUT.social.discord.x}px`,
-                top: `${CARD_LAYOUT.social.discord.y}px`,
-                fontSize: `${CARD_LAYOUT.social.discord.fontSize}px`,
-                maxWidth: '800px'
-              }}
-            >
-              <img
-                src="/images/icons/discord.png"
-                alt="Discord"
-                style={{
-                  width: `${CARD_LAYOUT.social.discord.fontSize}px`,
-                  height: `${CARD_LAYOUT.social.discord.fontSize}px`,
-                  objectFit: 'contain'
-                }}
-                crossOrigin="anonymous"
-              />
-              <span className="text-gray-700" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {cardData.discord}
-              </span>
-            </div>
-          )}
+          {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} />}
 
           <div
             className="absolute flex"
