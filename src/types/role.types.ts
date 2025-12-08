@@ -1,5 +1,5 @@
 export type RoleId = 'newbee' | 'worker-bee' | 'honeycomber' | 'manuka' | 'bee-younder';
-export type AchievementId = string;
+export type AdditionalRoleId = string;
 
 export interface Role {
   id: RoleId;
@@ -10,7 +10,7 @@ export interface Role {
   glowIntensity: number;
 }
 
-export interface Achievement {
+export interface AdditionalRole {
   id: string;
   name: string;
   icon: string;

@@ -1,7 +1,7 @@
-import { Achievement } from '../types/role.types';
+import { AdditionalRole } from '../types/role.types';
 import { generatePlaceholderIcon } from '../utils/placeholderGenerator';
 
-export const ACHIEVEMENTS: Achievement[] = [
+export const ADDITIONAL_ROLES: AdditionalRole[] = [
   {
     id: 'colmeia-collective',
     name: 'Colmeia Collective',
@@ -21,6 +21,20 @@ export const ACHIEVEMENTS: Achievement[] = [
     name: 'Colb 1k',
     icon: generatePlaceholderIcon('colb-1k'),
     glowColor: '#FFD700',
+    glowIntensity: 0.5
+  },
+  {
+    id: 'colomeia-minter',
+    name: 'Colomeia Minter',
+    icon: generatePlaceholderIcon('colomeia-minter'),
+    glowColor: '#9B59B6',
+    glowIntensity: 0.5
+  },
+  {
+    id: 'core-team',
+    name: 'Core Team',
+    icon: generatePlaceholderIcon('core-team'),
+    glowColor: '#E74C3C',
     glowIntensity: 0.5
   }
 ];

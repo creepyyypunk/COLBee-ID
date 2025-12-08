@@ -36,7 +36,9 @@ export function generatePlaceholderIcon(achievementId: string): string {
   const colors: Record<string, { bg: string; text: string; initials: string }> = {
     'colmeia-collective': { bg: '#FF6B9D', text: '#FFFFFF', initials: 'CC' },
     'colmeia-guider': { bg: '#4ECDC4', text: '#FFFFFF', initials: 'CG' },
-    'colb-1k': { bg: '#FFD700', text: '#000000', initials: '1K' }
+    'colb-1k': { bg: '#FFD700', text: '#000000', initials: '1K' },
+    'colomeia-minter': { bg: '#9B59B6', text: '#FFFFFF', initials: 'CM' },
+    'core-team': { bg: '#E74C3C', text: '#FFFFFF', initials: 'CT' }
   };
 
   const { bg, text, initials } = colors[achievementId] || { bg: '#CCCCCC', text: '#000000', initials: '?' };

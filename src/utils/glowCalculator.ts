@@ -1,9 +1,9 @@
-import { Role, Achievement } from '../types/role.types';
+import { Role, AdditionalRole } from '../types/role.types';
 import { CARD_LAYOUT } from '../config/cardLayout';
 
 export function calculateGlowLayers(
   role: Role,
-  achievements: Achievement[]
+  additionalRoles: AdditionalRole[]
 ): string {
   const layers: string[] = [];
   const { baseBlur, baseSpread } = CARD_LAYOUT.glow;
@@ -14,15 +14,15 @@ export function calculateGlowLayers(
     `0 0 ${baseBlur * role.glowIntensity}px ${baseSpread * role.glowIntensity}px ${role.glowColor}${roleAlpha}`
   );
 
-  // Achievement glows (progressively outward)
-  achievements.forEach((achievement, index) => {
+  // Additional role glows (progressively outward)
+  additionalRoles.forEach((additionalRole, index) => {
     const offset = (index + 1) * 5;
-    const blur = baseBlur * achievement.glowIntensity + offset;
-    const spread = baseSpread * achievement.glowIntensity + offset;
-    const alpha = Math.round(achievement.glowIntensity * 180).toString(16).padStart(2, '0');
+    const blur = baseBlur * additionalRole.glowIntensity + offset;
+    const spread = baseSpread * additionalRole.glowIntensity + offset;
+    const alpha = Math.round(additionalRole.glowIntensity * 180).toString(16).padStart(2, '0');
 
     layers.push(
-      `0 0 ${blur}px ${spread}px ${achievement.glowColor}${alpha}`
+      `0 0 ${blur}px ${spread}px ${additionalRole.glowColor}${alpha}`
     );
   });
 

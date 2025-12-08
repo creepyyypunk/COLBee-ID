@@ -45,7 +45,7 @@ export const CARD_LAYOUT = {
     discord: { x: 350, y: 358, fontSize: 24 },
   },
 
-  /** Achievement badges layout */
+  /** Additional role badges layout */
   achievements: {
     startX: 350,
     startY: 450,

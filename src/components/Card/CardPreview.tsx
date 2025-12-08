@@ -1,6 +1,6 @@
 import { CardData } from '../../types/card.types';
 import { ROLES } from '../../config/roles';
-import { ACHIEVEMENTS } from '../../config/achievements';
+import { ADDITIONAL_ROLES } from '../../config/additionalRoles';
 import { CARD_LAYOUT } from '../../config/cardLayout';
 import { calculateGlowLayers } from '../../utils/glowCalculator';
 
@@ -57,8 +57,8 @@ function SocialIcon({ platform, handle }: SocialIconProps) {
 
 export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }: CardPreviewProps) {
   const role = ROLES.find(r => r.id === cardData.role) || ROLES[0];
-  const achievements = ACHIEVEMENTS.filter(a => cardData.achievements.includes(a.id));
-  const glowCSS = calculateGlowLayers(role, achievements);
+  const additionalRoles = ADDITIONAL_ROLES.filter(a => cardData.achievements.includes(a.id));
+  const glowCSS = calculateGlowLayers(role, additionalRoles);
 
   const isExport = scale === 1;
   const containerStyles = isExport
@@ -158,11 +158,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               gap: `${CARD_LAYOUT.achievements.spacing - CARD_LAYOUT.achievements.iconSize}px`
             }}
           >
-            {achievements.map((achievement) => (
+            {additionalRoles.map((role) => (
               <img
-                key={achievement.id}
-                src={achievement.icon}
-                alt={achievement.name}
+                key={role.id}
+                src={role.icon}
+                alt={role.name}
                 style={{
                   width: `${CARD_LAYOUT.achievements.iconSize}px`,
                   height: `${CARD_LAYOUT.achievements.iconSize}px`

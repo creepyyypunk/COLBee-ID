@@ -1,5 +1,5 @@
 import Checkbox from '../UI/Checkbox';
-import { ACHIEVEMENTS } from '../../config/achievements';
+import { ADDITIONAL_ROLES } from '../../config/additionalRoles';
 
 interface AchievementSelectorProps {
   selected: string[];
@@ -7,26 +7,26 @@ interface AchievementSelectorProps {
 }
 
 export default function AchievementSelector({ selected, onChange }: AchievementSelectorProps) {
-  const handleToggle = (achievementId: string) => {
-    if (selected.includes(achievementId)) {
-      onChange(selected.filter(id => id !== achievementId));
+  const handleToggle = (roleId: string) => {
+    if (selected.includes(roleId)) {
+      onChange(selected.filter(id => id !== roleId));
     } else {
-      onChange([...selected, achievementId]);
+      onChange([...selected, roleId]);
     }
   };
 
   return (
     <div className="space-y-3">
       <label className="block text-sm font-medium text-gray-700 mb-3">
-        Achievements (Optional)
+        Additional roles (Optional)
       </label>
       <div className="space-y-2">
-        {ACHIEVEMENTS.map((achievement) => (
+        {ADDITIONAL_ROLES.map((role) => (
           <Checkbox
-            key={achievement.id}
-            label={achievement.name}
-            checked={selected.includes(achievement.id)}
-            onChange={() => handleToggle(achievement.id)}
+            key={role.id}
+            label={role.name}
+            checked={selected.includes(role.id)}
+            onChange={() => handleToggle(role.id)}
           />
         ))}
       </div>

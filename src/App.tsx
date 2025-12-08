@@ -90,7 +90,7 @@ function App() {
             </section>
 
             <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Achievements</h2>
+              <h2 className="text-2xl font-bold mb-4 text-honey-700">Additional roles</h2>
               <AchievementSelector
                 selected={cardData.achievements}
                 onChange={updateAchievements}
