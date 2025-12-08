@@ -1,4 +1,4 @@
-export type RoleId = 'newbee' | 'worker-bee' | 'honeycomber' | 'manuka' | 'bee-younder';
+export type RoleId = 'core-team' | 'newbee' | 'worker-bee' | 'honeycomber' | 'manuka' | 'bee-younder';
 export type AdditionalRoleId = string;
 
 export interface Role {

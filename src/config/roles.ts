@@ -41,5 +41,13 @@ export const ROLES: Role[] = [
     background: generatePlaceholderCard('bee-younder'),
     glowColor: '#9370DB',
     glowIntensity: 0.8
+  },
+  {
+    id: 'core-team',
+    name: 'core-team',
+    displayName: 'Core Team',
+    background: generatePlaceholderCard('core-team'),
+    glowColor: '#E74C3C',
+    glowIntensity: 0.9
   }
 ];

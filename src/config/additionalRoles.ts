@@ -31,10 +31,10 @@ export const ADDITIONAL_ROLES: AdditionalRole[] = [
     glowIntensity: 0.5
   },
   {
-    id: 'core-team',
-    name: 'Core Team',
-    icon: generatePlaceholderIcon('core-team'),
-    glowColor: '#E74C3C',
+    id: 'mod',
+    name: 'Mod',
+    icon: generatePlaceholderIcon('mod'),
+    glowColor: '#3498DB',
     glowIntensity: 0.5
   }
 ];

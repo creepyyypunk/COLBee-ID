@@ -48,9 +48,9 @@ export const CARD_LAYOUT = {
   /** Additional role badges layout */
   achievements: {
     startX: 350,
-    startY: 450,
-    iconSize: 60,
-    spacing: 80,
+    startY: 410,
+    iconSize: 75,
+    spacing: 95,
   },
 
   /** Glow effect configuration for role-based card styling */

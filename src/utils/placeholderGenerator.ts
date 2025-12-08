@@ -3,6 +3,7 @@
 
 export function generatePlaceholderCard(roleId: string): string {
   const gradients: Record<string, { start: string; end: string; label: string }> = {
+    'core-team': { start: '#FFE5E5', end: '#E74C3C', label: 'CORE TEAM' },
     'newbee': { start: '#FFF9E6', end: '#FFD700', label: 'NEWBEE' },
     'worker-bee': { start: '#FFE5B4', end: '#FF8C00', label: 'WORKER BEE' },
     'honeycomber': { start: '#FFBF00', end: '#8B4513', label: 'HONEYCOMBER' },
@@ -38,7 +39,7 @@ export function generatePlaceholderIcon(achievementId: string): string {
     'colmeia-guider': { bg: '#4ECDC4', text: '#FFFFFF', initials: 'CG' },
     'colb-1k': { bg: '#FFD700', text: '#000000', initials: '1K' },
     'colomeia-minter': { bg: '#9B59B6', text: '#FFFFFF', initials: 'CM' },
-    'core-team': { bg: '#E74C3C', text: '#FFFFFF', initials: 'CT' }
+    'mod': { bg: '#3498DB', text: '#FFFFFF', initials: 'MD' }
   };
 
   const { bg, text, initials } = colors[achievementId] || { bg: '#CCCCCC', text: '#000000', initials: '?' };
