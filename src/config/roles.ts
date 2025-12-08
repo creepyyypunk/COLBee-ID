@@ -6,7 +6,7 @@ export const ROLES: Role[] = [
     id: 'newbee',
     name: 'newbee',
     displayName: 'Newbee',
-    background: generatePlaceholderCard('newbee'),
+    background: '/card-designs/test.png',
     glowColor: '#FFF4CC',
     glowIntensity: 0.8
   },
