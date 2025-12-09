@@ -3,8 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: #FAFAFA;
+    --foreground: #0A0A0A;
+  }
+
+  * {
+    @apply transition-colors duration-300;
+  }
+
   body {
-    @apply bg-honey-50 text-bee-black font-sans;
+    @apply bg-honey-50 text-bee-black font-sans antialiased;
+    background: linear-gradient(to bottom, #FAFAFA 0%, #F5F5F5 100%);
   }
 
   h1, h2, h3 {
@@ -14,14 +24,28 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-honey-500 hover:bg-honey-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-bee-black hover:bg-honey-800 text-white font-medium py-3.5 px-8 rounded-xl
+           transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+           shadow-md hover:shadow-lg active:scale-[0.98];
   }
 
   .input-field {
-    @apply border-2 border-honey-300 focus:border-honey-500 focus:ring-2 focus:ring-honey-200 rounded-lg px-4 py-2 outline-none transition-all w-full;
+    @apply border border-honey-300 focus:border-bee-black focus:ring-2 focus:ring-honey-200
+           rounded-xl px-4 py-3 outline-none transition-all w-full bg-white
+           placeholder:text-honey-400 text-bee-black;
   }
 
   .card-container {
-    @apply bg-white rounded-xl shadow-2xl overflow-hidden;
+    @apply bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden
+           border border-honey-200/50;
+  }
+
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md rounded-2xl border border-honey-200/50
+           shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .section-title {
+    @apply text-xl font-display font-semibold text-bee-black mb-6 tracking-tight;
   }
 }

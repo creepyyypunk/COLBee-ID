@@ -16,11 +16,11 @@ export default function AchievementSelector({ selected, onChange }: AchievementS
   };
 
   return (
-    <div className="space-y-3">
-      <label className="block text-sm font-medium text-gray-700 mb-3">
+    <div className="space-y-4">
+      <label className="block text-sm font-medium text-bee-black tracking-tight">
         Additional roles (Optional)
       </label>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {ADDITIONAL_ROLES.map((role) => (
           <Checkbox
             key={role.id}

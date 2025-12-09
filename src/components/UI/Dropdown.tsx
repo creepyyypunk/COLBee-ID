@@ -7,14 +7,14 @@ interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 export default function Dropdown({ label, options, className = '', ...props }: DropdownProps) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-bee-black tracking-tight">
           {label}
         </label>
       )}
       <select
-        className={`input-field ${className}`}
+        className={`input-field cursor-pointer ${className}`}
         {...props}
       >
         {options.map((option) => (

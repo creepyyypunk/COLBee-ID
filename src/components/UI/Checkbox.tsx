@@ -6,13 +6,13 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export default function Checkbox({ label, className = '', ...props }: CheckboxProps) {
   return (
-    <label className="flex items-center space-x-3 cursor-pointer">
+    <label className="flex items-center space-x-3 cursor-pointer group">
       <input
         type="checkbox"
-        className={`w-5 h-5 text-honey-500 border-honey-300 rounded focus:ring-honey-200 focus:ring-2 ${className}`}
+        className={`w-5 h-5 text-bee-black border-2 border-honey-300 rounded-md focus:ring-honey-200 focus:ring-2 transition-all cursor-pointer ${className}`}
         {...props}
       />
-      <span className="text-sm font-medium text-gray-700">{label}</span>
+      <span className="text-sm font-medium text-bee-black group-hover:text-honey-700 transition-colors">{label}</span>
     </label>
   );
 }

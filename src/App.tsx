@@ -7,6 +7,7 @@ import RoleSelector from './components/Form/RoleSelector';
 import AchievementSelector from './components/Form/AchievementSelector';
 import CardPreview from './components/Card/CardPreview';
 import Button from './components/UI/Button';
+import { BGPattern } from './components/UI/BGPattern';
 import { CardData } from './types/card.types';
 import { generateCardImage, generateCardFilename } from './utils/imageGenerator';
 
@@ -57,14 +58,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-honey-50">
+    <div className="min-h-screen flex flex-col relative">
+      <BGPattern variant="dots" mask="fade-edges" size={20} fill="#D4D4D4" />
+
       <Header />
 
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
           <div className="space-y-6">
-            <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Your Information</h2>
+            <section className="glass-card p-8">
+              <h2 className="section-title">Your Information</h2>
               <UserInfoForm
                 username={cardData.username}
                 twitter={cardData.twitter}
@@ -73,24 +76,24 @@ function App() {
               />
             </section>
 
-            <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">PFP</h2>
+            <section className="glass-card p-8">
+              <h2 className="section-title">Profile Picture</h2>
               <AvatarUpload
                 currentAvatar={cardData.avatar}
                 onChange={updateAvatar}
               />
             </section>
 
-            <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Role</h2>
+            <section className="glass-card p-8">
+              <h2 className="section-title">Role</h2>
               <RoleSelector
                 selectedRole={cardData.role}
                 onChange={updateRole}
               />
             </section>
 
-            <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Additional roles</h2>
+            <section className="glass-card p-8">
+              <h2 className="section-title">Additional Roles</h2>
               <AchievementSelector
                 selected={cardData.achievements}
                 onChange={updateAchievements}
@@ -99,9 +102,9 @@ function App() {
           </div>
 
           <div className="space-y-6 lg:sticky lg:top-8 lg:self-start">
-            <section className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4 text-honey-700">Preview</h2>
-              <div className="w-full overflow-hidden">
+            <section className="glass-card p-8">
+              <h2 className="section-title">Preview</h2>
+              <div className="w-full overflow-hidden rounded-xl bg-honey-100/50 p-4">
                 <div className="w-full" style={{ aspectRatio: '1200/630' }}>
                   <CardPreview cardData={cardData} id="card-preview" scale={0.5} />
                 </div>
@@ -111,13 +114,13 @@ function App() {
             <Button
               onClick={handleDownload}
               disabled={isGenerating || !cardData.username}
-              className="w-full text-lg"
+              className="w-full text-base"
             >
               {isGenerating ? 'Generating...' : 'Download Card'}
             </Button>
 
             {!cardData.username && (
-              <p className="text-sm text-gray-500 text-center">
+              <p className="text-sm text-honey-600 text-center font-light">
                 Please enter your username to download
               </p>
             )}

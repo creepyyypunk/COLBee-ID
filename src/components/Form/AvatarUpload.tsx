@@ -38,46 +38,46 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block text-sm font-medium text-bee-black tracking-tight">
         Add your PFP here
       </label>
 
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
           isDragActive
-            ? 'border-honey-500 bg-honey-50'
-            : 'border-honey-300 hover:border-honey-400'
+            ? 'border-bee-black bg-honey-100/50 scale-[1.02]'
+            : 'border-honey-300 hover:border-honey-400 hover:bg-honey-50/30'
         }`}
       >
         <input {...getInputProps()} />
 
         {isProcessing ? (
-          <p className="text-gray-600">Processing image...</p>
+          <p className="text-honey-600">Processing image...</p>
         ) : currentAvatar ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex justify-center">
               <img
                 src={currentAvatar}
                 alt="Avatar preview"
-                className="w-32 h-32 rounded-full object-cover border-4 border-honey-300"
+                className="w-32 h-32 rounded-full object-cover border-4 border-honey-200 shadow-md"
               />
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-honey-600 font-light">
               Click or drag to replace
             </p>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex justify-center">
-              <img src="/images/avatar_bee.webp" alt="Bee" className="w-16 h-16" />
+              <img src="/images/avatar_bee.webp" alt="Bee" className="w-16 h-16 opacity-80" />
             </div>
-            <p className="text-gray-600">
+            <p className="text-bee-black font-medium">
               {isDragActive
                 ? 'Drop your image here'
                 : 'Drag and drop an image, or click to select'}
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-honey-600 font-light">
               PNG, JPG or WEBP (max 5MB)
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
             e.stopPropagation();
             onChange(null);
           }}
-          className="text-sm text-red-600 hover:text-red-700"
+          className="text-sm text-accent-danger hover:text-accent-danger/80 transition-colors font-medium"
         >
           Remove avatar
         </button>

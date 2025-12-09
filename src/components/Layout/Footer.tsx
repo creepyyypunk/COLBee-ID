@@ -2,10 +2,18 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-honey-800 text-honey-100 py-6 mt-12">
-      <div className="container mx-auto px-4 text-center">
-        <p className="text-sm">
-          © {currentYear} Built by <a href="https://x.com/xxxCryptoPunk" target="_blank" rel="noopener noreferrer"> Creep </a>
+    <footer className="border-t border-honey-200 bg-white/50 backdrop-blur-sm py-8 mt-16 relative z-10">
+      <div className="container mx-auto px-6 text-center">
+        <p className="text-sm text-honey-600 font-light">
+          © {currentYear} Built by{' '}
+          <a
+            href="https://x.com/xxxCryptoPunk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-bee-black font-medium hover:underline transition-all"
+          >
+            Creep
+          </a>
         </p>
       </div>
     </footer>
