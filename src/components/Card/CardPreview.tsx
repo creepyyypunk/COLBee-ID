@@ -111,9 +111,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
             {cardData.avatar ? (
               <img src={cardData.avatar} alt="Avatar" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full bg-honey-200 flex items-center justify-center text-6xl">
-                🐝
-              </div>
+              <img src="/images/avatar_bee.webp" alt="Default Avatar" className="w-full h-full object-cover" />
             )}
           </div>
 
