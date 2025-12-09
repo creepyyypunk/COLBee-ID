@@ -130,20 +130,6 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
             {cardData.username || 'Your Name'}
           </h1>
 
-          <p
-            className="absolute overflow-hidden whitespace-nowrap"
-            style={{
-              left: `${CARD_LAYOUT.role.x}px`,
-              top: `${CARD_LAYOUT.role.y}px`,
-              fontSize: `${CARD_LAYOUT.role.fontSize}px`,
-              color: CARD_LAYOUT.role.color,
-              maxWidth: PRIMARY_TEXT_MAX_WIDTH,
-              textOverflow: 'ellipsis'
-            }}
-          >
-            {role.displayName}
-          </p>
-
           {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} />}
 
           {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} />}
