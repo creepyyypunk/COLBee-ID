@@ -49,7 +49,7 @@ export const CARD_LAYOUT = {
   achievements: {
     startX: 350,
     startY: 410,
-    iconSize: 75,
+    iconSize: 80,
     spacing: 95,
   },
 
