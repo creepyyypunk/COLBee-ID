@@ -19,36 +19,28 @@ export const CARD_LAYOUT = {
   avatar: {
     x: 600, // centered: (1200 - 240) / 2 = 480, +120 for center of circle = 600
     y: 80,
-    radius: 120,
+    radius: 110,
   },
 
   /** Username text styling and position */
   username: {
     x: 600, // centered
-    y: 300,
-    fontSize: 48,
+    y: 290,
+    fontSize: 56,
     fontWeight: 'bold' as const,
     color: '#1A1A1A',
   },
 
-  /** Role text styling and position */
-  role: {
-    x: 600, // centered
-    y: 340,
-    fontSize: 32,
-    color: '#666666',
-  },
-
   /** Social media icons and handles */
   social: {
-    twitter: { x: 600, y: 380, fontSize: 28 },
-    discord: { x: 600, y: 420, fontSize: 28 },
+    twitter: { x: 600, y: 365, fontSize: 36 },
+    discord: { x: 600, y: 410, fontSize: 36 },
   },
 
   /** Additional role badges layout */
   achievements: {
     startX: 600, // centered
-    startY: 500,
+    startY: 460,
     iconSize: 80,
     spacing: 95,
   },

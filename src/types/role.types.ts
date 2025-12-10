@@ -8,6 +8,8 @@ export interface Role {
   background: string;
   glowColor: string;
   glowIntensity: number;
+  usernameColor: string;
+  socialColor: string;
 }
 
 export interface AdditionalRole {

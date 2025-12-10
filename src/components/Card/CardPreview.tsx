@@ -19,9 +19,10 @@ const SOCIAL_TEXT_MAX_WIDTH = '770px';
 const PRIMARY_TEXT_MAX_WIDTH = '800px';
 const ICON_TEXT_SPACING = 8;
 
-function SocialIcon({ platform, handle }: SocialIconProps) {
+function SocialIcon({ platform, handle, color }: SocialIconProps & { color: string }) {
   const config = CARD_LAYOUT.social[platform];
   const displayHandle = platform === 'twitter' && !handle.startsWith('@') ? `@${handle}` : handle;
+  const prefix = platform === 'twitter' ? 'X:' : 'Discord:';
 
   return (
     <div
@@ -32,24 +33,15 @@ function SocialIcon({ platform, handle }: SocialIconProps) {
         transform: 'translateX(-50%)',
       }}
     >
-      <img
-        src={`/images/icons/${platform}.png`}
-        alt={platform === 'twitter' ? 'Twitter' : 'Discord'}
-        style={{
-          width: `${config.fontSize}px`,
-          height: `${config.fontSize}px`,
-          objectFit: 'contain'
-        }}
-        crossOrigin="anonymous"
-      />
       <span
-        className="text-gray-700 whitespace-nowrap font-display"
+        className="whitespace-nowrap font-display"
         style={{
           fontSize: `${config.fontSize}px`,
           lineHeight: `${config.fontSize * 1.2}px`,
+          color: color,
         }}
       >
-        {displayHandle}
+        {prefix} {displayHandle}
       </span>
     </div>
   );
@@ -124,7 +116,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               transform: 'translateX(-50%)',
               fontSize: `${CARD_LAYOUT.username.fontSize}px`,
               fontWeight: CARD_LAYOUT.username.fontWeight,
-              color: CARD_LAYOUT.username.color,
+              color: role.usernameColor,
               maxWidth: PRIMARY_TEXT_MAX_WIDTH,
               textOverflow: 'ellipsis'
             }}
@@ -132,9 +124,9 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
             {cardData.username || 'Your Name'}
           </h1>
 
-          {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} />}
+          {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} color={role.socialColor} />}
 
-          {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} />}
+          {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} color={role.socialColor} />}
 
           <div
             className="absolute flex justify-center"

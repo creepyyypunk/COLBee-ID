@@ -8,7 +8,9 @@ export const ROLES: Role[] = [
     displayName: 'Newbee',
     background: '/card-designs/test1.png',
     glowColor: '#FFF4CC',
-    glowIntensity: 0.8
+    glowIntensity: 0.8,
+    usernameColor: '#331e1a',
+    socialColor: '#664c0f'
   },
   {
     id: 'worker-bee',
@@ -16,7 +18,9 @@ export const ROLES: Role[] = [
     displayName: 'Worker Bee',
     background: generatePlaceholderCard('worker-bee'),
     glowColor: '#FFB800',
-    glowIntensity: 0.8
+    glowIntensity: 0.8,
+    usernameColor: '#1A1A1A',
+    socialColor: '#666666'
   },
   {
     id: 'honeycomber',
@@ -24,7 +28,9 @@ export const ROLES: Role[] = [
     displayName: 'Honeycomber',
     background: generatePlaceholderCard('honeycomber'),
     glowColor: '#FF8C00',
-    glowIntensity: 0.8
+    glowIntensity: 0.8,
+    usernameColor: '#1A1A1A',
+    socialColor: '#666666'
   },
   {
     id: 'manuka',
@@ -32,7 +38,9 @@ export const ROLES: Role[] = [
     displayName: 'Manuka',
     background: generatePlaceholderCard('manuka'),
     glowColor: '#8B4513',
-    glowIntensity: 0.8
+    glowIntensity: 0.8,
+    usernameColor: '#1A1A1A',
+    socialColor: '#666666'
   },
   {
     id: 'bee-younder',
@@ -40,7 +48,9 @@ export const ROLES: Role[] = [
     displayName: 'Bee-younder',
     background: generatePlaceholderCard('bee-younder'),
     glowColor: '#9370DB',
-    glowIntensity: 0.8
+    glowIntensity: 0.8,
+    usernameColor: '#1A1A1A',
+    socialColor: '#666666'
   },
   {
     id: 'core-team',
@@ -48,6 +58,8 @@ export const ROLES: Role[] = [
     displayName: 'Core Team',
     background: generatePlaceholderCard('core-team'),
     glowColor: '#E74C3C',
-    glowIntensity: 0.9
+    glowIntensity: 0.9,
+    usernameColor: '#1A1A1A',
+    socialColor: '#666666'
   }
 ];
