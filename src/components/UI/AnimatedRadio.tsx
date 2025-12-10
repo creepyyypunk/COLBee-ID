@@ -70,7 +70,7 @@ export default function AnimatedRadio({ options, value, onChange, label }: Anima
                     ))}
 
                     {/* Background line */}
-                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-honey-300 to-transparent z-10" />
+                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-honey-600 to-transparent z-10" />
 
                     {/* Animated glider with glow */}
                     <div

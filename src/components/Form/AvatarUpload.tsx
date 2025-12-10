@@ -44,7 +44,7 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
         className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
           isDragActive
             ? 'border-bee-black bg-honey-100/50 scale-[1.02]'
-            : 'border-honey-300 hover:border-honey-400 hover:bg-honey-50/30'
+            : 'border-honey-600 hover:border-honey-400 hover:bg-honey-50/30'
         }`}
       >
         <input {...getInputProps()} />

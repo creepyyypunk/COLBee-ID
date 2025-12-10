@@ -24,14 +24,18 @@ function SocialIcon({ platform, handle }: SocialIconProps) {
   const displayHandle = platform === 'twitter' && !handle.startsWith('@') ? `@${handle}` : handle;
 
   return (
-    <>
+    <div
+      className="absolute flex items-center gap-2"
+      style={{
+        left: '50%',
+        top: `${config.y}px`,
+        transform: 'translateX(-50%)',
+      }}
+    >
       <img
         src={`/images/icons/${platform}.png`}
         alt={platform === 'twitter' ? 'Twitter' : 'Discord'}
-        className="absolute"
         style={{
-          left: `${config.x}px`,
-          top: `${config.y}px`,
           width: `${config.fontSize}px`,
           height: `${config.fontSize}px`,
           objectFit: 'contain'
@@ -39,19 +43,15 @@ function SocialIcon({ platform, handle }: SocialIconProps) {
         crossOrigin="anonymous"
       />
       <span
-        className="absolute text-gray-700 overflow-hidden whitespace-nowrap font-display"
+        className="text-gray-700 whitespace-nowrap font-display"
         style={{
-          left: `${config.x + config.fontSize + ICON_TEXT_SPACING}px`,
-          top: `${config.y}px`,
           fontSize: `${config.fontSize}px`,
           lineHeight: `${config.fontSize * 1.2}px`,
-          maxWidth: SOCIAL_TEXT_MAX_WIDTH,
-          textOverflow: 'ellipsis'
         }}
       >
         {displayHandle}
       </span>
-    </>
+    </div>
   );
 }
 
@@ -104,8 +104,9 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
             style={{
               width: `${CARD_LAYOUT.avatar.radius * 2}px`,
               height: `${CARD_LAYOUT.avatar.radius * 2}px`,
-              left: `${CARD_LAYOUT.avatar.x}px`,
-              top: `${CARD_LAYOUT.avatar.y}px`
+              left: '50%',
+              top: `${CARD_LAYOUT.avatar.y}px`,
+              transform: 'translateX(-50%)'
             }}
           >
             {cardData.avatar ? (
@@ -116,10 +117,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           </div>
 
           <h1
-            className="absolute font-bold overflow-hidden whitespace-nowrap font-display"
+            className="absolute font-bold overflow-hidden whitespace-nowrap font-display text-center"
             style={{
-              left: `${CARD_LAYOUT.username.x}px`,
+              left: '50%',
               top: `${CARD_LAYOUT.username.y}px`,
+              transform: 'translateX(-50%)',
               fontSize: `${CARD_LAYOUT.username.fontSize}px`,
               fontWeight: CARD_LAYOUT.username.fontWeight,
               color: CARD_LAYOUT.username.color,
@@ -135,10 +137,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} />}
 
           <div
-            className="absolute flex"
+            className="absolute flex justify-center"
             style={{
-              left: `${CARD_LAYOUT.achievements.startX}px`,
+              left: '50%',
               top: `${CARD_LAYOUT.achievements.startY}px`,
+              transform: 'translateX(-50%)',
               gap: `${CARD_LAYOUT.achievements.spacing - CARD_LAYOUT.achievements.iconSize}px`
             }}
           >
