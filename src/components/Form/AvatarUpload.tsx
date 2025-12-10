@@ -38,9 +38,6 @@ export default function AvatarUpload({ currentAvatar, onChange }: AvatarUploadPr
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-bee-black tracking-tight">
-        Add your PFP here
-      </label>
 
       <div
         {...getRootProps()}

@@ -101,7 +101,7 @@ function App() {
 
           {/* Row 1, Col 2: Role */}
           <section className="glass-card p-8">
-            <h2 className="section-title">Role</h2>
+            <h2 className="section-title">Select Your Role *</h2>
             <RoleSelector
               selectedRole={cardData.role}
               onChange={updateRole}
@@ -110,7 +110,7 @@ function App() {
 
           {/* Row 2, Col 1: Profile Picture */}
           <section className="glass-card p-8">
-            <h2 className="section-title">Profile Picture</h2>
+            <h2 className="section-title">Add your PFP here</h2>
             <AvatarUpload
               currentAvatar={cardData.avatar}
               onChange={updateAvatar}

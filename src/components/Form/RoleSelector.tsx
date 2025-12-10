@@ -1,4 +1,4 @@
-import Dropdown from '../UI/Dropdown';
+import AnimatedRadio from '../UI/AnimatedRadio';
 import { ROLES } from '../../config/roles';
 
 interface RoleSelectorProps {
@@ -8,16 +8,16 @@ interface RoleSelectorProps {
 
 export default function RoleSelector({ selectedRole, onChange }: RoleSelectorProps) {
   const options = ROLES.map(role => ({
+    id: `role-${role.id}`,
     value: role.id,
     label: role.displayName
   }));
 
   return (
-    <Dropdown
-      label="Select Your Role *"
+    <AnimatedRadio
       options={options}
       value={selectedRole}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={onChange}
     />
   );
 }
