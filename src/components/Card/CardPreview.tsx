@@ -39,12 +39,12 @@ function SocialIcon({ platform, handle }: SocialIconProps) {
         crossOrigin="anonymous"
       />
       <span
-        className="absolute text-gray-700 overflow-hidden whitespace-nowrap"
+        className="absolute text-gray-700 overflow-hidden whitespace-nowrap font-display"
         style={{
           left: `${config.x + config.fontSize + ICON_TEXT_SPACING}px`,
           top: `${config.y}px`,
           fontSize: `${config.fontSize}px`,
-          lineHeight: `${config.fontSize}px`,
+          lineHeight: `${config.fontSize * 1.2}px`,
           maxWidth: SOCIAL_TEXT_MAX_WIDTH,
           textOverflow: 'ellipsis'
         }}
@@ -116,7 +116,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           </div>
 
           <h1
-            className="absolute font-bold overflow-hidden whitespace-nowrap"
+            className="absolute font-bold overflow-hidden whitespace-nowrap font-display"
             style={{
               left: `${CARD_LAYOUT.username.x}px`,
               top: `${CARD_LAYOUT.username.y}px`,

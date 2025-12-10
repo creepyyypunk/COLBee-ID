@@ -71,3 +71,33 @@ export function generateCardFilename(username: string): string {
   const sanitized = sanitizeFilename(username) || 'user';
   return `COLBee-ID-${sanitized}.png`;
 }
+
+/**
+ * Generates a PNG image from a card element and returns as base64 data URL
+ * @param elementId - The ID of the card element to capture
+ * @returns Promise<string> - base64 data URL of the generated image
+ */
+export async function generateCardImageAsBase64(
+  elementId: string
+): Promise<string> {
+  const element = document.getElementById(elementId);
+  if (!element) {
+    throw new Error(`Card element with ID "${elementId}" not found`);
+  }
+
+  try {
+    // Allow time for images to load and layout to stabilize
+    await new Promise(resolve => setTimeout(resolve, IMAGE_CONFIG.loadDelay));
+
+    const dataUrl = await toPng(element, {
+      cacheBust: true,
+      pixelRatio: IMAGE_CONFIG.pixelRatio,
+      ...CARD_DIMENSIONS,
+    });
+
+    return dataUrl;
+  } catch (error) {
+    console.error('Failed to generate card image:', error);
+    throw error;
+  }
+}

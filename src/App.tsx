@@ -8,8 +8,9 @@ import AchievementSelector from './components/Form/AchievementSelector';
 import CardPreview from './components/Card/CardPreview';
 import Button from './components/UI/Button';
 import { BGPattern } from './components/UI/BGPattern';
+import CardModal from './components/Card/CardModal';
 import { CardData } from './types/card.types';
-import { generateCardImage, generateCardFilename } from './utils/imageGenerator';
+import { generateCardImageAsBase64, generateCardFilename } from './utils/imageGenerator';
 
 function App() {
   const [cardData, setCardData] = useState<CardData>({
@@ -22,6 +23,8 @@ function App() {
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
   const updateUserInfo = (info: { username?: string; twitter?: string; discord?: string }) => {
     setCardData(prev => ({ ...prev, ...info }));
@@ -39,22 +42,42 @@ function App() {
     setCardData(prev => ({ ...prev, achievements }));
   };
 
-  const handleDownload = async () => {
+  const handleOpenModal = async () => {
     if (!cardData.username) {
-      alert('Please enter a username before downloading your card');
+      alert('Please enter a username before viewing your card');
       return;
     }
 
+    // Show generating state
     setIsGenerating(true);
+
     try {
-      const filename = generateCardFilename(cardData.username);
-      await generateCardImage('card-export', filename);
+      // Generate image as base64
+      const imageDataUrl = await generateCardImageAsBase64('card-export');
+      setGeneratedImage(imageDataUrl);
+      setIsModalOpen(true);
     } catch (error) {
       console.error('Failed to generate card:', error);
       alert('Failed to generate card. Please try again.');
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Clear image to free memory
+    setGeneratedImage(null);
+  };
+
+  const handleDownloadFromModal = () => {
+    if (!generatedImage || !cardData.username) return;
+
+    // Use the already generated image from state
+    const link = document.createElement('a');
+    link.download = generateCardFilename(cardData.username);
+    link.href = generatedImage;
+    link.click();
   };
 
   return (
@@ -64,71 +87,71 @@ function App() {
       <Header />
 
       <main className="flex-1 container mx-auto px-6 py-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          <div className="space-y-6">
-            <section className="glass-card p-8">
-              <h2 className="section-title">Your Information</h2>
-              <UserInfoForm
-                username={cardData.username}
-                twitter={cardData.twitter}
-                discord={cardData.discord}
-                onChange={updateUserInfo}
-              />
-            </section>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {/* Row 1, Col 1: Your Information */}
+          <section className="glass-card p-8">
+            <h2 className="section-title">Your Information</h2>
+            <UserInfoForm
+              username={cardData.username}
+              twitter={cardData.twitter}
+              discord={cardData.discord}
+              onChange={updateUserInfo}
+            />
+          </section>
 
-            <section className="glass-card p-8">
-              <h2 className="section-title">Profile Picture</h2>
-              <AvatarUpload
-                currentAvatar={cardData.avatar}
-                onChange={updateAvatar}
-              />
-            </section>
+          {/* Row 1, Col 2: Role */}
+          <section className="glass-card p-8">
+            <h2 className="section-title">Role</h2>
+            <RoleSelector
+              selectedRole={cardData.role}
+              onChange={updateRole}
+            />
+          </section>
 
-            <section className="glass-card p-8">
-              <h2 className="section-title">Role</h2>
-              <RoleSelector
-                selectedRole={cardData.role}
-                onChange={updateRole}
-              />
-            </section>
+          {/* Row 2, Col 1: Profile Picture */}
+          <section className="glass-card p-8">
+            <h2 className="section-title">Profile Picture</h2>
+            <AvatarUpload
+              currentAvatar={cardData.avatar}
+              onChange={updateAvatar}
+            />
+          </section>
 
-            <section className="glass-card p-8">
-              <h2 className="section-title">Additional Roles</h2>
-              <AchievementSelector
-                selected={cardData.achievements}
-                onChange={updateAchievements}
-              />
-            </section>
-          </div>
+          {/* Row 2, Col 2: Additional Roles */}
+          <section className="glass-card p-8">
+            <h2 className="section-title">Additional Roles</h2>
+            <AchievementSelector
+              selected={cardData.achievements}
+              onChange={updateAchievements}
+            />
+          </section>
+        </div>
 
-          <div className="space-y-6 lg:sticky lg:top-8 lg:self-start">
-            <section className="glass-card p-8">
-              <h2 className="section-title">Preview</h2>
-              <div className="w-full overflow-hidden rounded-xl bg-honey-100/50 p-4">
-                <div className="w-full" style={{ aspectRatio: '1200/630' }}>
-                  <CardPreview cardData={cardData} id="card-preview" scale={0.5} />
-                </div>
-              </div>
-            </section>
-
-            <Button
-              onClick={handleDownload}
-              disabled={isGenerating || !cardData.username}
-              className="w-full text-base"
-            >
-              {isGenerating ? 'Generating...' : 'Download Card'}
-            </Button>
-
-            {!cardData.username && (
-              <p className="text-sm text-honey-600 text-center font-light">
-                Please enter your username to download
-              </p>
-            )}
-          </div>
+        {/* Get your ID Card button */}
+        <div className="max-w-5xl mx-auto mt-8">
+          <Button
+            onClick={handleOpenModal}
+            disabled={!cardData.username || isGenerating}
+            className="w-full md:w-auto md:min-w-[300px] md:mx-auto md:block text-base"
+          >
+            {isGenerating ? 'Generating...' : 'Get your ID Card'}
+          </Button>
+          {!cardData.username && (
+            <p className="text-sm text-honey-600 text-center font-light mt-2">
+              Please enter your username to view your card
+            </p>
+          )}
         </div>
       </main>
 
       <Footer />
+
+      <CardModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        imageUrl={generatedImage}
+        onDownload={handleDownloadFromModal}
+      />
 
       <div className="fixed -left-[99999px] top-0">
         <CardPreview cardData={cardData} id="card-export" scale={1} />

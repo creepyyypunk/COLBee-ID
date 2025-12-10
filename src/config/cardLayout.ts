@@ -41,8 +41,8 @@ export const CARD_LAYOUT = {
 
   /** Social media icons and handles */
   social: {
-    twitter: { x: 350, y: 318, fontSize: 24 },
-    discord: { x: 350, y: 358, fontSize: 24 },
+    twitter: { x: 350, y: 268, fontSize: 28 },
+    discord: { x: 350, y: 308, fontSize: 28 },
   },
 
   /** Additional role badges layout */
