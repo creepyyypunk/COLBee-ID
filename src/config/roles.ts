@@ -6,7 +6,7 @@ export const ROLES: Role[] = [
     id: 'newbee',
     name: 'newbee',
     displayName: 'Newbee',
-    background: '/card-designs/test1.png',
+    background: '/card-designs/test2.png',
     glowColor: '#FFF4CC',
     glowIntensity: 0.8,
     usernameColor: '#331e1a',
