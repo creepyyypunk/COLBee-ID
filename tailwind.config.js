@@ -26,12 +26,43 @@ export default {
           black: '#0A0A0A',
         },
         accent: {
+          DEFAULT: '#F5F0E5',
+          foreground: '#0A0A0A',
           primary: '#6366F1',
           secondary: '#8B5CF6',
           success: '#10B981',
           warning: '#F59E0B',
           danger: '#EF4444',
-        }
+        },
+        border: '#EDE5CC',
+        input: '#E8D090',
+        ring: '#E4C06A',
+        background: '#FFFFFF',
+        foreground: '#0A0A0A',
+        primary: {
+          DEFAULT: '#E4C06A',
+          foreground: '#FFFFFF',
+        },
+        secondary: {
+          DEFAULT: '#F5F0E5',
+          foreground: '#0A0A0A',
+        },
+        destructive: {
+          DEFAULT: '#EF4444',
+          foreground: '#FFFFFF',
+        },
+        muted: {
+          DEFAULT: '#F5F0E5',
+          foreground: '#7E611A',
+        },
+        popover: {
+          DEFAULT: '#FFFFFF',
+          foreground: '#0A0A0A',
+        },
+        card: {
+          DEFAULT: '#FFFFFF',
+          foreground: '#0A0A0A',
+        },
       },
       fontFamily: {
         sans: ['Roboto', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],

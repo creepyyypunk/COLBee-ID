@@ -1,4 +1,5 @@
-import Checkbox from '../UI/Checkbox';
+import { Selection } from 'react-aria-components';
+import { GridList, GridListItem } from '../UI/grid-list';
 import { ADDITIONAL_ROLES } from '../../config/additionalRoles';
 
 interface AchievementSelectorProps {
@@ -7,29 +8,37 @@ interface AchievementSelectorProps {
 }
 
 export default function AchievementSelector({ selected, onChange }: AchievementSelectorProps) {
-  const handleToggle = (roleId: string) => {
-    if (selected.includes(roleId)) {
-      onChange(selected.filter(id => id !== roleId));
+  const handleSelectionChange = (keys: Selection) => {
+    if (keys === 'all') {
+      onChange(ADDITIONAL_ROLES.map(role => role.id));
     } else {
-      onChange([...selected, roleId]);
+      onChange(Array.from(keys) as string[]);
     }
   };
 
   return (
     <div className="space-y-4">
       <label className="block text-sm font-medium text-bee-black tracking-tight">
-        Additional roles (Optional)
+  
       </label>
-      <div className="space-y-3">
+      <GridList
+        aria-label="Additional roles"
+        selectionMode="multiple"
+        selectedKeys={selected}
+        onSelectionChange={handleSelectionChange}
+        className="border-0 bg-transparent shadow-none"
+      >
         {ADDITIONAL_ROLES.map((role) => (
-          <Checkbox
+          <GridListItem
             key={role.id}
-            label={role.name}
-            checked={selected.includes(role.id)}
-            onChange={() => handleToggle(role.id)}
-          />
+            id={role.id}
+            textValue={role.name}
+            className="text-base hover:text-honey-600 data-[selected]:text-bee-orange data-[selected]:bg-bee-orange/10 data-[selected]:font-medium"
+          >
+            {role.name}
+          </GridListItem>
         ))}
-      </div>
+      </GridList>
     </div>
   );
 }

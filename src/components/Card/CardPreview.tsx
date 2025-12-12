@@ -15,9 +15,7 @@ interface SocialIconProps {
   handle: string;
 }
 
-const SOCIAL_TEXT_MAX_WIDTH = '770px';
 const PRIMARY_TEXT_MAX_WIDTH = '800px';
-const ICON_TEXT_SPACING = 8;
 
 function SocialIcon({ platform, handle, color }: SocialIconProps & { color: string }) {
   const config = CARD_LAYOUT.social[platform];
