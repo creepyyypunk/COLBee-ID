@@ -17,10 +17,67 @@ interface SocialIconProps {
 
 const PRIMARY_TEXT_MAX_WIDTH = '800px';
 
-function SocialIcon({ platform, handle, color }: SocialIconProps & { color: string }) {
+function GlowingText({
+  text,
+  style,
+  className,
+  glowConfig
+}: {
+  text: string;
+  style: React.CSSProperties;
+  className: string;
+  glowConfig?: { color: string; intensity: number };
+}) {
+  if (!glowConfig) {
+    return <h1 className={className} style={style}>{text}</h1>;
+  }
+
+  const letters = text.split('');
+  const glowStyle = {
+    textShadow: `
+      0 0 ${glowConfig.intensity * 2}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 4}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 6}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 8}px ${glowConfig.color}
+    `.trim()
+  };
+
+  // Remove overflow-related styles to prevent glow clipping
+  const { overflow, textOverflow, ...cleanStyle } = style as any;
+
+  return (
+    <h1 className={className} style={cleanStyle}>
+      {letters.map((letter, index) => (
+        <span key={index} style={glowStyle}>
+          {letter}
+        </span>
+      ))}
+    </h1>
+  );
+}
+
+function SocialIcon({
+  platform,
+  handle,
+  color,
+  glowConfig
+}: SocialIconProps & {
+  color: string;
+  glowConfig?: { color: string; intensity: number };
+}) {
   const config = CARD_LAYOUT.social[platform];
   const displayHandle = platform === 'twitter' && !handle.startsWith('@') ? `@${handle}` : handle;
   const prefix = platform === 'twitter' ? 'X:' : 'Discord:';
+  const fullText = `${prefix} ${displayHandle}`;
+
+  const glowStyle = glowConfig ? {
+    textShadow: `
+      0 0 ${glowConfig.intensity * 2}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 4}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 6}px ${glowConfig.color},
+      0 0 ${glowConfig.intensity * 8}px ${glowConfig.color}
+    `.trim()
+  } : {};
 
   return (
     <div
@@ -31,16 +88,33 @@ function SocialIcon({ platform, handle, color }: SocialIconProps & { color: stri
         transform: 'translateX(-50%)',
       }}
     >
-      <span
-        className="whitespace-nowrap font-display"
-        style={{
-          fontSize: `${config.fontSize}px`,
-          lineHeight: `${config.fontSize * 1.2}px`,
-          color: color,
-        }}
-      >
-        {prefix} {displayHandle}
-      </span>
+      {glowConfig ? (
+        <span
+          className="whitespace-nowrap font-display"
+          style={{
+            fontSize: `${config.fontSize}px`,
+            lineHeight: `${config.fontSize * 1.2}px`,
+            color: color,
+          }}
+        >
+          {fullText.split('').map((letter, index) => (
+            <span key={index} style={glowStyle}>
+              {letter}
+            </span>
+          ))}
+        </span>
+      ) : (
+        <span
+          className="whitespace-nowrap font-display"
+          style={{
+            fontSize: `${config.fontSize}px`,
+            lineHeight: `${config.fontSize * 1.2}px`,
+            color: color,
+          }}
+        >
+          {fullText}
+        </span>
+      )}
     </div>
   );
 }
@@ -90,7 +164,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           style={!isExport ? { transform: `scale(${scale})`, transformOrigin: 'top left' } : undefined}
         >
           <div
-            className="absolute rounded-full overflow-hidden bg-white border-4 border-white shadow-lg"
+            className="absolute rounded-full overflow-hidden shadow-lg"
             style={{
               width: `${CARD_LAYOUT.avatar.radius * 2}px`,
               height: `${CARD_LAYOUT.avatar.radius * 2}px`,
@@ -106,8 +180,9 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
             )}
           </div>
 
-          <h1
-            className="absolute font-bold overflow-hidden whitespace-nowrap font-display text-center"
+          <GlowingText
+            text={cardData.username || 'Your Name'}
+            className="absolute font-bold whitespace-nowrap font-display text-center"
             style={{
               left: '50%',
               top: `${CARD_LAYOUT.username.y}px`,
@@ -115,16 +190,14 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
               fontSize: `${CARD_LAYOUT.username.fontSize}px`,
               fontWeight: CARD_LAYOUT.username.fontWeight,
               color: role.usernameColor,
-              maxWidth: PRIMARY_TEXT_MAX_WIDTH,
-              textOverflow: 'ellipsis'
+              maxWidth: PRIMARY_TEXT_MAX_WIDTH
             }}
-          >
-            {cardData.username || 'Your Name'}
-          </h1>
+            glowConfig={role.textGlow}
+          />
 
-          {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} color={role.socialColor} />}
+          {cardData.twitter && <SocialIcon platform="twitter" handle={cardData.twitter} color={role.socialColor} glowConfig={role.socialTextGlow || role.textGlow} />}
 
-          {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} color={role.socialColor} />}
+          {cardData.discord && <SocialIcon platform="discord" handle={cardData.discord} color={role.socialColor} glowConfig={role.socialTextGlow || role.textGlow} />}
 
           <div
             className="absolute flex justify-center"

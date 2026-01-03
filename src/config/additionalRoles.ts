@@ -1,39 +1,38 @@
 import { AdditionalRole } from '../types/role.types';
-import { generatePlaceholderIcon } from '../utils/placeholderGenerator';
 
 export const ADDITIONAL_ROLES: AdditionalRole[] = [
   {
     id: 'colmeia-collective',
     name: 'Colmeia Collective',
-    icon: '/images/avatar_bee.webp',
+    icon: '/icons/collective.png',
     glowColor: '#FF6B9D',
     glowIntensity: 0.5
   },
   {
     id: 'colmeia-guider',
     name: 'Colmeia Guider',
-    icon: generatePlaceholderIcon('colmeia-guider'),
+    icon: 'icons/guider.png',
     glowColor: '#4ECDC4',
     glowIntensity: 0.5
   },
   {
     id: 'colb-1k',
     name: 'Colb 1k',
-    icon: generatePlaceholderIcon('colb-1k'),
+    icon: '/icons/1k.png',
     glowColor: '#FFD700',
     glowIntensity: 0.5
   },
   {
     id: 'colomeia-minter',
     name: 'Colomeia Minter',
-    icon: generatePlaceholderIcon('colomeia-minter'),
+    icon: '/icons/minter.png',
     glowColor: '#9B59B6',
     glowIntensity: 0.5
   },
   {
     id: 'mod',
     name: 'Mod',
-    icon: generatePlaceholderIcon('mod'),
+    icon: '/icons/mod.png',
     glowColor: '#3498DB',
     glowIntensity: 0.5
   }

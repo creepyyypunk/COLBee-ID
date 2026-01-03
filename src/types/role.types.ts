@@ -10,6 +10,14 @@ export interface Role {
   glowIntensity: number;
   usernameColor: string;
   socialColor: string;
+  textGlow?: {
+    color: string;
+    intensity: number;
+  };
+  socialTextGlow?: {
+    color: string;
+    intensity: number;
+  };
 }
 
 export interface AdditionalRole {
