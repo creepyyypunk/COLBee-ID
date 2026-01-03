@@ -11,6 +11,44 @@ const IMAGE_CONFIG = {
 } as const;
 
 /**
+ * Waits for all images in an element to fully load
+ */
+async function waitForImagesToLoad(element: HTMLElement): Promise<void> {
+  const images = element.querySelectorAll('img');
+  console.log(`[ImageGen] Found ${images.length} images to load`);
+
+  const imagePromises = Array.from(images).map((img, index) => {
+    const src = img.src.substring(0, 100); // Truncate for logging
+
+    if (img.complete && img.naturalHeight !== 0) {
+      console.log(`[ImageGen] Image ${index + 1} already loaded:`, src);
+      return Promise.resolve();
+    }
+
+    console.log(`[ImageGen] Waiting for image ${index + 1} to load:`, src);
+
+    return new Promise<void>((resolve) => {
+      img.onload = () => {
+        console.log(`[ImageGen] Image ${index + 1} loaded successfully`);
+        resolve();
+      };
+      img.onerror = () => {
+        console.error(`[ImageGen] Image ${index + 1} failed to load:`, img.src);
+        resolve(); // Resolve anyway to not block the entire process
+      };
+      // Timeout fallback
+      setTimeout(() => {
+        console.warn(`[ImageGen] Image ${index + 1} timeout`);
+        resolve();
+      }, 5000);
+    });
+  });
+
+  await Promise.all(imagePromises);
+  console.log('[ImageGen] All images processed');
+}
+
+/**
  * Generates a PNG image from a card element and triggers download
  * @param elementId - The ID of the card element to capture
  * @param filename - The desired filename for the downloaded image
@@ -25,7 +63,10 @@ export async function generateCardImage(
   }
 
   try {
-    // Allow time for images to load and layout to stabilize
+    // Wait for all images to load
+    await waitForImagesToLoad(element);
+
+    // Additional delay for layout stabilization
     await new Promise(resolve => setTimeout(resolve, IMAGE_CONFIG.loadDelay));
 
     const dataUrl = await toPng(element, {
@@ -89,7 +130,10 @@ export async function generateCardImageAsBase64(
   }
 
   try {
-    // Allow time for images to load and layout to stabilize
+    // Wait for all images to load
+    await waitForImagesToLoad(element);
+
+    // Additional delay for layout stabilization
     await new Promise(resolve => setTimeout(resolve, IMAGE_CONFIG.loadDelay));
 
     const dataUrl = await toPng(element, {
