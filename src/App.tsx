@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import UserInfoForm from './components/Form/UserInfoForm';
@@ -11,6 +11,7 @@ import { BGPattern } from './components/UI/BGPattern';
 import CardModal from './components/Card/CardModal';
 import { CardData } from './types/card.types';
 import { generateCardImageAsBase64, generateCardFilename } from './utils/imageGenerator';
+import { preloadAllImages, preloadCardImages } from './utils/imagePreloader';
 
 function App() {
   const [cardData, setCardData] = useState<CardData>({
@@ -25,6 +26,28 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isPreloading, setIsPreloading] = useState(true);
+
+  // Preload all images on app mount for better performance
+  useEffect(() => {
+    setIsPreloading(true);
+    preloadAllImages()
+      .catch(err => {
+        console.error('Failed to preload images:', err);
+      })
+      .finally(() => {
+        setIsPreloading(false);
+      });
+  }, []);
+
+  // Preload card-specific images when card data changes
+  useEffect(() => {
+    if (cardData.role) {
+      preloadCardImages(cardData.role, cardData.achievements, cardData.avatar || undefined).catch(err => {
+        console.error('Failed to preload card images:', err);
+      });
+    }
+  }, [cardData.role, cardData.achievements, cardData.avatar]);
 
   const updateUserInfo = (info: { username?: string; twitter?: string; discord?: string }) => {
     setCardData(prev => ({ ...prev, ...info }));
@@ -52,13 +75,19 @@ function App() {
     setIsGenerating(true);
 
     try {
+      // Preload card images one more time to ensure they're ready
+      await preloadCardImages(cardData.role, cardData.achievements, cardData.avatar || undefined);
+
+      // Small delay to ensure DOM is ready
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       // Generate image as base64
       const imageDataUrl = await generateCardImageAsBase64('card-export');
       setGeneratedImage(imageDataUrl);
       setIsModalOpen(true);
     } catch (error) {
       console.error('Failed to generate card:', error);
-      alert('Failed to generate card. Please try again.');
+      alert('Failed to generate card. Please check your internet connection and try again.');
     } finally {
       setIsGenerating(false);
     }
@@ -131,12 +160,12 @@ function App() {
         <div className="max-w-5xl mx-auto mt-8">
           <Button
             onClick={handleOpenModal}
-            disabled={!cardData.username || isGenerating}
+            disabled={!cardData.username || isGenerating || isPreloading}
             className="w-full md:w-auto md:min-w-[300px] md:mx-auto md:block text-base"
           >
-            {isGenerating ? 'Generating...' : 'Get your ID Card'}
+            {isPreloading ? 'Loading images...' : isGenerating ? 'Generating...' : 'Get your ID Card'}
           </Button>
-          {!cardData.username && (
+          {!cardData.username && !isPreloading && (
             <p className="text-sm text-honey-600 text-center font-light mt-2">
               Please enter your username to view your card
             </p>

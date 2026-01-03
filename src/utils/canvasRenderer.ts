@@ -7,24 +7,58 @@ const CARD_WIDTH = 1200;
 const CARD_HEIGHT = 630;
 
 /**
- * Loads an image from a URL or data URL
+ * Loads an image from a URL or data URL with retry logic
  */
-function loadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
+function loadImage(src: string, maxRetries: number = 3): Promise<HTMLImageElement> {
+  return new Promise(async (resolve, reject) => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const img = await new Promise<HTMLImageElement>((res, rej) => {
+          const image = new Image();
+          image.crossOrigin = 'anonymous';
 
-    // Remove crossOrigin for data URLs
-    if (src.startsWith('data:')) {
-      img.removeAttribute('crossOrigin');
+          // Remove crossOrigin for data URLs
+          if (src.startsWith('data:')) {
+            image.removeAttribute('crossOrigin');
+          }
+
+          const timeout = setTimeout(() => {
+            rej(new Error('Image load timeout'));
+          }, 10000); // 10 second timeout
+
+          image.onload = () => {
+            clearTimeout(timeout);
+            res(image);
+          };
+
+          image.onerror = (e) => {
+            clearTimeout(timeout);
+            rej(new Error(`Failed to load: ${e}`));
+          };
+
+          // Add cache-busting for retries (but not for data URLs)
+          if (attempt > 1 && !src.startsWith('data:')) {
+            const separator = src.includes('?') ? '&' : '?';
+            image.src = `${src}${separator}_retry=${attempt}_${Date.now()}`;
+          } else {
+            image.src = src;
+          }
+        });
+
+        console.log(`[Canvas] Image loaded successfully on attempt ${attempt}:`, src.substring(0, 50));
+        resolve(img);
+        return;
+      } catch (error) {
+        console.warn(`[Canvas] Image load attempt ${attempt}/${maxRetries} failed:`, src.substring(0, 50), error);
+
+        if (attempt === maxRetries) {
+          reject(new Error(`Failed to load image after ${maxRetries} attempts: ${src}`));
+        } else {
+          // Wait before retry with exponential backoff
+          await new Promise(res => setTimeout(res, 500 * attempt));
+        }
+      }
     }
-
-    img.onload = () => resolve(img);
-    img.onerror = (e) => {
-      console.error('Failed to load image:', src, e);
-      reject(new Error(`Failed to load image: ${src}`));
-    };
-    img.src = src;
   });
 }
 

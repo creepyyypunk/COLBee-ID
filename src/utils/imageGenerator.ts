@@ -7,8 +7,58 @@ const CARD_DIMENSIONS = {
 
 const IMAGE_CONFIG = {
   pixelRatio: 2,
-  loadDelay: 1000, // Increased delay to ensure all images load
+  loadDelay: 2000, // Increased delay to ensure all images load on slow connections
+  imageTimeout: 10000, // 10 seconds timeout for each image
 } as const;
+
+/**
+ * Attempts to reload an image with retry logic
+ */
+async function retryImageLoad(img: HTMLImageElement, maxRetries: number = 3): Promise<void> {
+  const originalSrc = img.src;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        if (img.complete && img.naturalHeight !== 0) {
+          resolve();
+          return;
+        }
+
+        const timeout = setTimeout(() => {
+          reject(new Error('Timeout'));
+        }, IMAGE_CONFIG.imageTimeout);
+
+        img.onload = () => {
+          clearTimeout(timeout);
+          console.log(`[ImageGen] Image loaded on attempt ${attempt}`);
+          resolve();
+        };
+
+        img.onerror = () => {
+          clearTimeout(timeout);
+          reject(new Error('Load failed'));
+        };
+
+        // Force reload by adding cache-busting parameter on retry
+        if (attempt > 1) {
+          const separator = originalSrc.includes('?') ? '&' : '?';
+          img.src = `${originalSrc}${separator}_retry=${attempt}_${Date.now()}`;
+        }
+      });
+      return; // Success - exit retry loop
+    } catch (error) {
+      console.warn(`[ImageGen] Image load attempt ${attempt}/${maxRetries} failed:`, originalSrc.substring(0, 100));
+      if (attempt === maxRetries) {
+        console.error(`[ImageGen] Image failed to load after ${maxRetries} attempts:`, originalSrc);
+      }
+      // Wait before retry (exponential backoff)
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+      }
+    }
+  }
+}
 
 /**
  * Waits for all images in an element to fully load
@@ -17,31 +67,16 @@ async function waitForImagesToLoad(element: HTMLElement): Promise<void> {
   const images = element.querySelectorAll('img');
   console.log(`[ImageGen] Found ${images.length} images to load`);
 
-  const imagePromises = Array.from(images).map((img, index) => {
+  const imagePromises = Array.from(images).map(async (img, index) => {
     const src = img.src.substring(0, 100); // Truncate for logging
 
     if (img.complete && img.naturalHeight !== 0) {
       console.log(`[ImageGen] Image ${index + 1} already loaded:`, src);
-      return Promise.resolve();
+      return;
     }
 
     console.log(`[ImageGen] Waiting for image ${index + 1} to load:`, src);
-
-    return new Promise<void>((resolve) => {
-      img.onload = () => {
-        console.log(`[ImageGen] Image ${index + 1} loaded successfully`);
-        resolve();
-      };
-      img.onerror = () => {
-        console.error(`[ImageGen] Image ${index + 1} failed to load:`, img.src);
-        resolve(); // Resolve anyway to not block the entire process
-      };
-      // Timeout fallback
-      setTimeout(() => {
-        console.warn(`[ImageGen] Image ${index + 1} timeout`);
-        resolve();
-      }, 5000);
-    });
+    await retryImageLoad(img);
   });
 
   await Promise.all(imagePromises);
