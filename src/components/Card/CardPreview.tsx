@@ -157,6 +157,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
           alt={role.displayName}
           className="absolute inset-0 w-full h-full object-cover"
           crossOrigin="anonymous"
+          loading="eager"
+          onError={(e) => {
+            console.error('Failed to load background:', role.background);
+            e.currentTarget.style.backgroundColor = '#FFF4CC';
+          }}
         />
 
         <div
@@ -178,6 +183,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
                 src={cardData.avatar}
                 alt="Avatar"
                 className="w-full h-full object-cover"
+                loading="eager"
+                onError={(e) => {
+                  console.error('Failed to load avatar, using default');
+                  e.currentTarget.src = '/images/avatar_bee.webp';
+                }}
               />
             ) : (
               <img
@@ -185,6 +195,7 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
                 alt="Default Avatar"
                 className="w-full h-full object-cover"
                 crossOrigin="anonymous"
+                loading="eager"
               />
             )}
           </div>
@@ -227,6 +238,11 @@ export default function CardPreview({ cardData, id = 'card-preview', scale = 1 }
                   height: `${CARD_LAYOUT.achievements.iconSize}px`
                 }}
                 crossOrigin="anonymous"
+                loading="eager"
+                onError={(e) => {
+                  console.error('Failed to load achievement icon:', role.icon);
+                  e.currentTarget.style.display = 'none';
+                }}
               />
             ))}
           </div>

@@ -17,6 +17,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    assetsInlineLimit: 0, // Don't inline assets to avoid CORS issues
   },
   server: {
     port: 3000,
