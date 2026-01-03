@@ -25,7 +25,7 @@ export const CARD_LAYOUT = {
   /** Username text styling and position */
   username: {
     x: 600, // centered
-    y: 290,
+    y: 280,
     fontSize: 60,
     fontWeight: 'bold' as const,
     color: '#1A1A1A',
@@ -33,8 +33,8 @@ export const CARD_LAYOUT = {
 
   /** Social media icons and handles */
   social: {
-    twitter: { x: 600, y: 365, fontSize: 40 },
-    discord: { x: 600, y: 410, fontSize: 40 },
+    twitter: { x: 600, y: 355, fontSize: 40 },
+    discord: { x: 600, y: 400, fontSize: 40 },
   },
 
   /** Additional role badges layout */
