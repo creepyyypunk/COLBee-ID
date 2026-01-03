@@ -7,7 +7,7 @@ const CARD_DIMENSIONS = {
 
 const IMAGE_CONFIG = {
   pixelRatio: 2,
-  loadDelay: 300,
+  loadDelay: 1000, // Increased delay to ensure all images load
 } as const;
 
 /**
@@ -29,9 +29,12 @@ export async function generateCardImage(
     await new Promise(resolve => setTimeout(resolve, IMAGE_CONFIG.loadDelay));
 
     const dataUrl = await toPng(element, {
-      cacheBust: true,
+      cacheBust: false, // Changed to false to avoid CORS issues
       pixelRatio: IMAGE_CONFIG.pixelRatio,
       ...CARD_DIMENSIONS,
+      canvasWidth: CARD_DIMENSIONS.width,
+      canvasHeight: CARD_DIMENSIONS.height,
+      skipAutoScale: true,
     });
 
     downloadImage(dataUrl, filename);
@@ -90,9 +93,12 @@ export async function generateCardImageAsBase64(
     await new Promise(resolve => setTimeout(resolve, IMAGE_CONFIG.loadDelay));
 
     const dataUrl = await toPng(element, {
-      cacheBust: true,
+      cacheBust: false, // Changed to false to avoid CORS issues
       pixelRatio: IMAGE_CONFIG.pixelRatio,
       ...CARD_DIMENSIONS,
+      canvasWidth: CARD_DIMENSIONS.width,
+      canvasHeight: CARD_DIMENSIONS.height,
+      skipAutoScale: true,
     });
 
     return dataUrl;
